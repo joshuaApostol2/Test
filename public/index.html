@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 20%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Protected Website</h1>
+  <p>If you are a bot, you are not allowed here.</p>
+  <script>
+    const detectFork = () => {
+      if (navigator.webdriver || !navigator.userAgent || navigator.userAgent.includes('Headless')) {
+        document.body.innerHTML = '<h1>This is a bot</h1>';
+        setTimeout(() => window.close(), 2000);
+      }
+
+      const forbiddenHeaders = ['sitemode.io', 'bot', 'crawler'];
+      forbiddenHeaders.forEach((header) => {
+        if (navigator.userAgent.toLowerCase().includes(header)) {
+          document.body.innerHTML = '<h1>This is a bot</h1>';
+          setTimeout(() => window.close(), 2000);
+        }
+      });
+    };
+
+    detectFork();
+    setInterval(detectFork, 3000);
+
+    window.addEventListener('blur', () => {
+      debugger;
+      document.body.innerHTML = '<h1>This is a bot</h1>';
+      setTimeout(() => window.close(), 2000);
+    });
+  </script>
+</body>
+</html>
